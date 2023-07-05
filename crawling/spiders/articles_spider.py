@@ -40,17 +40,22 @@ class GuardianSpider(Spider):
     def get_article_content(self, response, article_link, start_url):
         # Date
         date_raw = response.xpath('//*[@class="dcr-eb59kw"]//text()').get()
-        date = datetime.strptime(date_raw, '%a %d %b %Y %H.%M BST').date() if date_raw else datetime.today().date()
-
+        try: date = datetime.strptime(date_raw, '%a %d %b %Y %H.%M BST').date() if date_raw else datetime.today().date()
+        except ValueError: date = datetime.strptime(date_raw, '%a %d %b %Y %H.%M GMT').date() if date_raw else datetime.today().date()
         # Author
-        author = response.xpath('//*[@aria-label="Contributor info"]//a[@rel="author"]/text()').get().replace("\\n", "") or "N/A"
+        author = response.xpath('//*[@aria-label="Contributor info"]//a[@rel="author"]/text()').get() or "N/A"
+        author = author.strip()
+
         # Headline
-        headline = response.xpath('//*[@data-gu-name="headline"]//text()').getall().replace("\\n", "") or "N/A"
+        headline = response.xpath('//*[@data-gu-name="headline"]//text()').getall() or ["N/A"]
+
         # Type
-        type = response.xpath('//*[@data-gu-name="headline"]//a[@class="dcr-1csdh30"]//text()').get().replace("\\n", "") or "N/A"
+        type = response.xpath('//*[@data-gu-name="headline"]//a[@class="dcr-1csdh30"]//text()').get() or "N/A"
+        type = type.strip()
 
         # Category
-        category = response.xpath('//*[@data-link-name="article section"]//text()').get().replace("\\n", "") or "N/A"
+        category = response.xpath('//*[@data-link-name="article section"]//text()').get() or "N/A"
+        category = category.strip()
 
         # Rating (for reviews only)
         if type == "Review":
@@ -64,7 +69,7 @@ class GuardianSpider(Spider):
         # Body
         body = response.xpath('//*[@data-gu-name="body"]//text()').getall()
         for i in range(len(body)):
-            body[i] = body[i].replace(';', ',')  # Necessary to avoid csv conflicts
+            body[i] = body[i].strip().replace(';', ',')  # Necessary to avoid csv conflicts
 
         # Write local file with crawled data
         with open(self.data_file, 'a') as f:
