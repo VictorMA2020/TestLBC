@@ -1,0 +1,15 @@
+google-api-core==2.7.3
+google-api-python-client==2.47.0
+google-auth==2.6.6
+google-auth-httplib2==0.1.0
+google-auth-oauthlib==0.5.1
+google-cloud==0.34.0
+google-cloud-bigquery==3.11.3
+google-cloud-core==2.3.2
+google-crc32c==1.5.0
+Jinja2==2.10.1
+Scrapy==2.5.0
+protobuf==3.20.*
+pyopenssl==22.0.0
+cryptography==38.0.4
+attrs==23.1.0
