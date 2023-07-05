@@ -23,6 +23,17 @@ https://console.cloud.google.com/bigquery?hl=fr&organizationId=0&project=test-lb
 
 I will need to manually add your account to the project for you to access it, send me the email address that you wish to access BQ with.
 
+As for the question asking to find the top 5 movies by genre, just run this query in BQ : 
+```
+SELECT 
+    genre, 
+    headline, 
+    ROW_NUMBER() OVER(PARTITION BY genre ORDER BY rating DESC) AS rank 
+FROM dwh_tmp.articles_cleaned_20230701 
+WHERE type = 'Review' 
+QUALIFY rank <= 5
+```
+
 ## Improvements
 Now to answer the questions in the instructions :
 
@@ -37,7 +48,6 @@ Now to answer the questions in the instructions :
 
 ### What are the advantages and disadvantages of using a distributed data processing framework in this situation?
 -> I think that theoritically, centralized data processing is more cost-efficient, as it requires less hardware resources, whereas distributed data processing is less time consuming. In this exercise, the amount of data to ingest is pretty low anyway so I don't think it matters much. Infrastructure questions are not my strong suit and I've only worked with distributed data processing so I can't really tell. 
-
 
 
 
