@@ -6,7 +6,7 @@ Installation steps :
 - Run : docker-compose build
 - Run : docker-compose up
 - Open a browser to localhost:8080 to access the webserver -> Default login is airflow/airflow
-- To run a command in the container, use the docker exec command
+- To run a command in the container, use the docker exec command <br />
     ex : docker exec testlbc-airflow-webserver-1 airflow dags backfill some_dag -s YYYY-MM-JJ
 
 The BQ project where the tables are stored : 
