@@ -8,6 +8,9 @@
 - Run : docker-compose build
 - Run : docker-compose up
 - Open a browser to localhost:8080 to access the webserver -> Default login is airflow/airflow
+- Create a Google Cloud connection in Admin > Connections as : <br />
+        name: "gcp" <br />
+        keyfile_path: "GCP_service_account_key.json"
 
 ## Execution
 To run a command in the container, use the docker exec command <br />
